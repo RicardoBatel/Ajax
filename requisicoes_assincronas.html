@@ -11,17 +11,31 @@
         <script>
 
             function requisitarPagina(url){
+
+                //incluir o gif de loading na página
+                if(!document.getElementById('loading')){
+                    let imgLoading = document.createElement('img')
+                    imgLoading.id = 'loading'
+                    imgLoading.src = 'loading.gif'
+                    imgLoading.className = 'rounded mx-auto d-block'
+
+                    document.getElementById('conteudo').appendChild(imgLoading)
+                }
+
                 //requisição não iniciada, state = 0
                 let ajax = new XMLHttpRequest();
-                console.log(ajax.readyState)
+                //console.log(ajax.readyState)
 
                 //conexão estabelecida com o servidor, state = 1
                 ajax.open('GET', url)
-                console.log(ajax.readyState)
+                //console.log(ajax.readyState)
 
                 //de alguma lógica que fique olhando para o programa da req
                 ajax.onreadystatechange = () => {
-                    console.log(ajax.readyState)
+                    if(ajax.readyState == 4){
+                        console.log('requisição finalizada com sucesso')
+                        document.getElementById('loading').remove()
+                    }
                 }
 
                 ajax.send()
@@ -60,7 +74,7 @@
 	    	<div class="row">
 		    	<div class="col-md-1"></div>
 
-		    	<div class="col-md-10">
+		    	<div class="col-md-10" id="conteudo">
 		    			
 		    	</div>
 		    		
