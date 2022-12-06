@@ -12,6 +12,8 @@
 
             function requisitarPagina(url){
 
+                document.getElementById('conteudo').innerHTML=''
+
                 //incluir o gif de loading na página
                 if(!document.getElementById('loading')){
                     let imgLoading = document.createElement('img')
@@ -32,9 +34,14 @@
 
                 //de alguma lógica que fique olhando para o programa da req
                 ajax.onreadystatechange = () => {
-                    if(ajax.readyState == 4){
-                        console.log('requisição finalizada com sucesso')
-                        document.getElementById('loading').remove()
+                    if(ajax.readyState == 4 && ajax.status == 200){
+                        document.getElementById('conteudo').innerHTML = ajax.responseText
+                        //document.getElementById('loading').remove()
+                    }
+
+                    if(ajax.readyState == 4 && ajax.status == 404){
+                        document.getElementById('conteudo').innerHTML = '...tente novamente mais tarde...'
+                        //document.getElementById('loading').remove()
                     }
                 }
 
